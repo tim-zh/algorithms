@@ -1,0 +1,10 @@
+- A* (A star)
+- binary search
+- bloom filter
+- breadth-first search
+- bucket sort
+- depth-first search
+- Dijkstra's algorithm
+- merge sort
+- quick sort (in-place also)
+- traveling salesman (kinda)
