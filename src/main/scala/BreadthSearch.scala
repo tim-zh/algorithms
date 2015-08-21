@@ -16,7 +16,7 @@ object BreadthSearch {
       if (current.neighbors.exists(x == _))
         result = true
       else
-        front ++= current.neighbors.filter(! visited.contains(_))
+        front ++= current.neighbors.filterNot(visited)
     }
     result
   }

@@ -13,7 +13,7 @@ object Dijkstra {
       notVisited = notVisited.tail
       visited += currentNode
 
-      currentNode.neighbors.filter(! visited.contains(_)).foreach { neighbor =>
+      currentNode.neighbors.filterNot(visited).foreach { neighbor =>
         val newWeight = weights(currentNode) + currentNode.weightOf(neighbor)
         if (weights.contains(neighbor)) {
           if (newWeight < weights(neighbor))

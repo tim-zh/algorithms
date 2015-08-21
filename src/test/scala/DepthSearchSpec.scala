@@ -3,7 +3,7 @@ import org.scalatest.{FlatSpec, Matchers}
 
 class DepthSearchSpec extends FlatSpec with Matchers {
 
-  "DepthSearch" should "search for node in a graph" in {
+  private def test(search: (DepthSearch.Node, DepthSearch.Node) => Boolean) {
     val node1 = TestNode(1)
     val node2 = TestNode(2)
     val node3 = TestNode(3)
@@ -16,8 +16,20 @@ class DepthSearchSpec extends FlatSpec with Matchers {
     node5._neighbors += node1
     node6._neighbors ++= Set(node2, node3)
 
-    DepthSearch.search(node5, node1) should be(true)
-    DepthSearch.search(node6, node1) should be(false)
+    search(node5, node1) should be(true)
+    search(node6, node1) should be(false)
+  }
+
+  "DepthSearch" should "search for node in a graph" in {
+    test(DepthSearch.search(_, _))
+  }
+
+  it should "search(immutable) for node in a graph" in {
+    test(DepthSearch.searchImmutable)
+  }
+
+  it should "search(immutable, tailrec) for node in a graph" in {
+    test(DepthSearch.searchImmutableTailRec(_, _))
   }
 
   case class TestNode(id: Int) extends DepthSearch.Node {

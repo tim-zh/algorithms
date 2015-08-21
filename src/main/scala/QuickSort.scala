@@ -1,6 +1,6 @@
 object QuickSort {
 
-  def sort(xs: Array[Int]): Array[Int] = {
+  def sort(xs: Array[Int]): Array[Int] =
     if (xs.length < 2)
       xs
     else {
@@ -13,18 +13,15 @@ object QuickSort {
       else
         sort(first) ++ sort(second)
     }
-  }
 
-  def sortInPlace(xs: Array[Int]) = {
-    innerSort(xs, 0, xs.length - 1)
-  }
+  def sortInPlace(xs: Array[Int]) = innerSort(xs, 0, xs.length - 1)
 
   private def innerSort(xs: Array[Int], firstIndex: Int, lastIndex: Int): Unit = {
     if (lastIndex == firstIndex)
       return
     var (first, last) = (firstIndex, lastIndex)
     val pivot = xs(last)
-    while(first <= last) {
+    while (first <= last) {
       if (xs(first) > pivot) {
         swap(xs, first, last)
         last -= 1

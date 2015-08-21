@@ -14,7 +14,7 @@ object TravelingSalesman {
     bestResult
   }
 
-  private def findPath(node: Node, nodes: Set[Node]): (Double, Seq[Node]) = {
+  private def findPath(node: Node, nodes: Set[Node]): (Double, Seq[Node]) =
     if (nodes.size == 1)
       (distanceBetween(node, nodes.head), Seq(node, nodes.head))
     else {
@@ -27,7 +27,6 @@ object TravelingSalesman {
       }
       bestResult
     }
-  }
 
   private def distanceBetween(node1: Node, node2: Node) =
     math.sqrt(node1.zip(node2).map(pair => (pair._1 - pair._2) * (pair._1 - pair._2)).sum)
