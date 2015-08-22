@@ -5,6 +5,7 @@
 - bucket sort
 - depth-first search
 - Dijkstra's algorithm
+- max subsequence (Kadane also)
 - merge sort
 - quick sort (in-place also)
 - traveling salesman (kinda)
