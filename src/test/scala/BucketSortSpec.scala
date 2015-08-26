@@ -1,8 +1,6 @@
 import org.scalatest.{FlatSpec, Matchers}
 
-
 class BucketSortSpec extends FlatSpec with Matchers {
-
 	"BucketSort" should "sort integers" in {
 		val seq = Seq(29, 25, 3, 49, 9, 37, 21, 43)
 

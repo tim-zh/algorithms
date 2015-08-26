@@ -1,8 +1,6 @@
 import scala.collection.mutable
 
-
 class BloomFilter[-T](size: Int) {
-
 	private val filter = new mutable.BitSet(size)
 
 	def add(x: T): Unit = filter += x.hashCode % size

@@ -1,8 +1,6 @@
 import scala.collection.mutable
 
-
 object BreadthSearch {
-
 	def search(x: Node, root: Node) = {
 		var result = false
 
@@ -22,7 +20,6 @@ object BreadthSearch {
 	}
 
 	trait Node {
-
 		def neighbors: Iterable[Node]
 	}
 

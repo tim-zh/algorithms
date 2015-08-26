@@ -2,7 +2,6 @@ import org.scalatest.{FlatSpec, Matchers}
 
 
 class QuickSortSpec extends FlatSpec with Matchers {
-
 	"QuickSort" should "sort integers" in {
 		val seq = Array(29, 25, 3, 49, 9, 37, 21, 43)
 

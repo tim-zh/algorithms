@@ -1,8 +1,6 @@
 import scala.collection.mutable
 
-
 object BucketSort {
-
 	def sort(xs: Seq[Int], numberOfBuckets: Int = 4, baseAlgorithm: Option[Seq[Int] => Seq[Int]] = None): Seq[Int] = {
 		if (xs.size <= numberOfBuckets * 2) {
 			if (baseAlgorithm.isDefined)

@@ -5,6 +5,7 @@
 - bucket sort
 - depth-first search
 - Dijkstra's algorithm
+- HyperLogLog
 - max subsequence (Kadane also)
 - merge sort
 - quick sort (in-place also)

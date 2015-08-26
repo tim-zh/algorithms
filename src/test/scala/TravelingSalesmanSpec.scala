@@ -1,8 +1,6 @@
 import org.scalatest.{FlatSpec, Matchers}
 
-
 class TravelingSalesmanSpec extends FlatSpec with Matchers {
-
 	"TravelingSalesman" should "find the shortest path" in {
 		val node1 = Array(0d, 0d)
 		val node2 = Array(10d, 0d)

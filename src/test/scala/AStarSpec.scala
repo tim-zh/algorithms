@@ -2,9 +2,7 @@ import org.scalatest.{FlatSpec, Matchers}
 
 import scala.collection.mutable.ArrayBuffer
 
-
 class AStarSpec extends FlatSpec with Matchers {
-
 	"AStar" should "find a path" in {
 		val start = TestNode(0, 0)
 		val node1 = TestNode(1, 1)
@@ -23,7 +21,6 @@ class AStarSpec extends FlatSpec with Matchers {
 	}
 
 	case class TestNode(x: Int, y: Int) extends AStar.Node[TestNode] {
-
 		val _neighbors = ArrayBuffer[TestNode]()
 
 		override def distanceTo(n: TestNode): Double = Math.hypot(x - n.x, y - n.y)

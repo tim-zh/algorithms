@@ -1,8 +1,6 @@
 import org.scalatest.{FlatSpec, Matchers}
 
-
 class MergeSortSpec extends FlatSpec with Matchers {
-
 	private def test(mergeStrategy: (Seq[Int], Seq[Int]) => Seq[Int]) {
 		val seq = Seq(29, 25, 3, 49, 9, 37, 21, 43)
 

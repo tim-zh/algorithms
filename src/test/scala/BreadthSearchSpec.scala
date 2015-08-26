@@ -1,8 +1,6 @@
 import org.scalatest.{FlatSpec, Matchers}
 
-
 class BreadthSearchSpec extends FlatSpec with Matchers {
-
 	"BreadthSearch" should "search for node in a graph" in {
 		val node1 = TestNode(1)
 		val node2 = TestNode(2)
@@ -21,7 +19,6 @@ class BreadthSearchSpec extends FlatSpec with Matchers {
 	}
 
 	case class TestNode(id: Int) extends BreadthSearch.Node {
-
 		var _neighbors = Set[TestNode]()
 
 		override def neighbors: Iterable[BreadthSearch.Node] = _neighbors

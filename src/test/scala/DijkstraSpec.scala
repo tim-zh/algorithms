@@ -1,8 +1,6 @@
 import org.scalatest.{FlatSpec, Matchers}
 
-
 class DijkstraSpec extends FlatSpec with Matchers {
-
 	"Dijkstra" should "calculate absolute paths" in {
 		val n1 = new TestNode
 		val n2 = new TestNode
@@ -22,7 +20,6 @@ class DijkstraSpec extends FlatSpec with Matchers {
 	}
 
 	class TestNode extends Dijkstra.Node {
-
 		var _neighbors: Map[Dijkstra.Node, Double] = null
 
 		override def neighbors: Iterable[Dijkstra.Node] = _neighbors.keySet

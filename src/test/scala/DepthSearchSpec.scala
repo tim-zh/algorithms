@@ -1,8 +1,6 @@
 import org.scalatest.{FlatSpec, Matchers}
 
-
 class DepthSearchSpec extends FlatSpec with Matchers {
-
 	private def test(search: (DepthSearch.Node, DepthSearch.Node) => Boolean) {
 		val node1 = TestNode(1)
 		val node2 = TestNode(2)
@@ -33,7 +31,6 @@ class DepthSearchSpec extends FlatSpec with Matchers {
 	}
 
 	case class TestNode(id: Int) extends DepthSearch.Node {
-
 		var _neighbors = Set[TestNode]()
 
 		override def neighbors: Iterable[DepthSearch.Node] = _neighbors

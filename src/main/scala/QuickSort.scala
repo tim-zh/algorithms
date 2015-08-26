@@ -1,5 +1,4 @@
 object QuickSort {
-
 	def sort(xs: Array[Int]): Array[Int] =
 		if (xs.length < 2)
 			xs

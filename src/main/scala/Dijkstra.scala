@@ -1,8 +1,6 @@
 import scala.collection.SortedSet
 
-
 object Dijkstra {
-
 	def calculatePathWeights(start: Node): Map[Node, Double] = {
 		var weights = Map(start -> 0d)
 		var notVisited = SortedSet[Node](start)(Ordering.fromLessThan { (n1, n2) => weights(n1) < weights(n2) })
@@ -29,7 +27,6 @@ object Dijkstra {
 	}
 
 	trait Node {
-
 		def weightOf(neighbor: Node): Double
 
 		def neighbors: Iterable[Node]

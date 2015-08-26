@@ -1,8 +1,6 @@
 import org.scalatest.{FlatSpec, Matchers}
 
-
 class BloomFilterSpec extends FlatSpec with Matchers {
-
 	"BloomFilter" should "probably check stored elements" in {
 		val filter = new BloomFilter[String](10)
 		filter.add("123")

@@ -1,8 +1,6 @@
 import scala.collection.SortedSet
 
-
 object AStar {
-
 	def getPath[N <: Node[N]](start: N, finish: N): Option[Seq[N]] = {
 		var resultPath = Seq[N]()
 		var usedSet = Set[N]()
@@ -32,7 +30,6 @@ object AStar {
 	}
 
 	trait Node[N <: Node[N]] {
-
 		def distanceTo(n: N): Double
 
 		def neighbors: Iterable[N]

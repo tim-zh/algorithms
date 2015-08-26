@@ -1,5 +1,4 @@
 object MergeSort {
-
 	def sort(xs: Seq[Int], mergeStrategy: (Seq[Int], Seq[Int]) => Seq[Int] = merge): Seq[Int] =
 		if (xs.size < 2)
 			xs

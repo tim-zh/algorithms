@@ -1,9 +1,7 @@
 import scala.collection.immutable.Stack
 import scala.collection.mutable
 
-
 object DepthSearch {
-
 	def search(x: Node, root: Node, visited: mutable.Set[Node] = mutable.Set()): Boolean =
 		if (x == root)
 			true
@@ -54,7 +52,6 @@ object DepthSearch {
 
 
 	trait Node {
-
 		def neighbors: Iterable[Node]
 	}
 

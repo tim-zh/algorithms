@@ -1,8 +1,6 @@
 import org.scalatest.{FlatSpec, Matchers}
 
-
 class BinarySearchSpec extends FlatSpec with Matchers {
-
 	"BinarySearch" should "search" in {
 		val xs = Array[Integer](1, 2, 3, 6, 8, 12)
 

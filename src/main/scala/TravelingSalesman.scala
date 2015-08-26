@@ -1,5 +1,4 @@
 object TravelingSalesman {
-
 	type Node = Array[Double]
 
 	def findPath(nodes: Set[Node]): (Double, Seq[Node]) = {

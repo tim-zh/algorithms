@@ -1,5 +1,4 @@
 object BinarySearch {
-
 	def searchIndex[T <: Comparable[T]](x: T, xs: Array[T]): Int = {
 		if (xs.length < 2) {
 			if (xs.contains(x))
