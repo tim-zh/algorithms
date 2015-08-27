@@ -1,17 +1,17 @@
 import scala.collection.SortedSet
 
-object HyperLogLog extends App{
+object HyperLogLog {
 	def getApproximateSetCardinality(multiset: Iterable[_], accuracy: Int = 1) = {
-		val processedHashes = multiset.view.map(_.hashCode()).foldLeft(SortedSet[Int]()(Ordering[Int].reverse)) { (minHashes, hash) =>
+		val processedHashes = multiset.view.map(x => math.abs(x.hashCode)).foldLeft(SortedSet[Int]()(Ordering[Int].reverse)) { (minHashes, hash) =>
 			if (minHashes.size < accuracy)
 				minHashes + hash
 			else if (minHashes.head > hash && ! minHashes.contains(hash))
 				minHashes - minHashes.head + hash
 			else
 				minHashes
-		} map { hashCode =>
-			(hashCode / Integer.MAX_VALUE.asInstanceOf[Double] + 1) / 2
+		} map { hash =>
+			hash / Integer.MAX_VALUE.asInstanceOf[Double]
 		}
-		processedHashes.size / processedHashes.sliding(2).map(pair => pair.tail.head - pair.head).sum
+		processedHashes.size / (processedHashes.toSeq.sliding(2).map(pair => pair(1) - pair(0)).sum + processedHashes.head)
 	}
 }
