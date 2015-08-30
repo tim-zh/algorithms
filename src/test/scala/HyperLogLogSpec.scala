@@ -1,6 +1,5 @@
 import org.scalatest.{FlatSpec, Matchers}
 
-
 class HyperLogLogSpec extends FlatSpec with Matchers {
 	"HyperLogLog" should "calculate an approximate number of collection's unique elements" in {
 		val xs = Seq(-330651821, -722209082, 313622883, 641200391, -1399691884, 1696384529, -1135661078, 1716032436,

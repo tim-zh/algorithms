@@ -12,6 +12,9 @@ object HyperLogLog {
 		} map { hash =>
 			hash / Integer.MAX_VALUE.asInstanceOf[Double]
 		}
-		processedHashes.size / (processedHashes.toSeq.sliding(2).map(pair => pair(1) - pair(0)).sum + processedHashes.head)
+		1 / averagedIntervalFrom0ToMinHash(processedHashes)
 	}
+
+	private def averagedIntervalFrom0ToMinHash(hashes: SortedSet[Double]) =
+		(hashes.toSeq.sliding(2).map(pair => pair(1) - pair(0)).sum + hashes.head) / hashes.size
 }

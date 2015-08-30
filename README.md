@@ -8,5 +8,6 @@
 - HyperLogLog
 - max subsequence (Kadane also)
 - merge sort
+- MinHash
 - quick sort (in-place also)
 - traveling salesman (kinda)
