@@ -1,4 +1,5 @@
 - A* (A star)
+- AVL tree
 - binary search
 - bloom filter
 - breadth-first search
