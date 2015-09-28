@@ -1,9 +1,11 @@
-class AvlNode[T <: Comparable[T]] private (private var value: T, var parent: AvlNode[T]) {
+class AvlNode[T <: Comparable[T]](private var value: T, private var parent: AvlNode[T] = null) {
+  require(value != null)
+
   protected var left: AvlNode[T] = _
   protected var right: AvlNode[T] = _
   private var balance: Int = 0
 
-  def contains(v: T): Boolean = {
+  def contains(v: T): Boolean =
     if (v == null)
       false
     else if (v.compareTo(value) == 0)
@@ -12,18 +14,25 @@ class AvlNode[T <: Comparable[T]] private (private var value: T, var parent: Avl
       right.contains(v)
     else
       left.contains(v)
+
+  def add(v: T) = {
+    internalAdd(v)
+    var root = this
+    while (root.parent != null)
+      root = root.parent
+    root
   }
 
   /**
    * @return true if height has increased
    */
-  def add(v: T): Boolean = {
+  private def internalAdd(v: T): Boolean = {
     if (v.compareTo(value) < 0) {
       if (left == null) {
         left = new AvlNode[T](v, this)
         balance -= 1
         return balance != 0
-      } else if (left.add(v)) {
+      } else if (left.internalAdd(v)) {
         balance -= 1
         return ! tryRotateRight()
       }
@@ -32,7 +41,7 @@ class AvlNode[T <: Comparable[T]] private (private var value: T, var parent: Avl
         right = new AvlNode[T](v, this)
         balance += 1
         return balance != 0
-      } else if (right.add(v)) {
+      } else if (right.internalAdd(v)) {
         balance += 1
         return ! tryRotateLeft()
       }
@@ -40,10 +49,18 @@ class AvlNode[T <: Comparable[T]] private (private var value: T, var parent: Avl
     false
   }
 
+  def remove(v: T) = {
+    internalRemove(v)
+    var root = this
+    while (root.parent != null)
+      root = root.parent
+    root
+  }
+
   /**
    * @return true if height has decreased
    */
-  def remove(v: T): Boolean =
+  private def internalRemove(v: T): Boolean =
     if (v.compareTo(value) == 0) {
       if (left == null && right == null) {
         replaceBy(null)
@@ -56,7 +73,7 @@ class AvlNode[T <: Comparable[T]] private (private var value: T, var parent: Avl
         true
       } else {
         val replacement = if (balance > 0) greaterNode else lesserNode
-        val heightDecreased = remove(replacement.value)
+        val heightDecreased = internalRemove(replacement.value)
         if (heightDecreased)
           if (balance > 0)
             balance -= 1
@@ -66,16 +83,12 @@ class AvlNode[T <: Comparable[T]] private (private var value: T, var parent: Avl
         heightDecreased
       }
     } else if (v.compareTo(value) < 0) {
-      if (left == null)
-        false
-      else if (left.remove(v)) {
+      if (left != null && left.internalRemove(v)) {
         balance += 1
         tryRotateLeft()
       } else
         false
-    } else if (right == null)
-      false
-    else if (right.remove(v)) {
+    } else if (right != null && right.internalRemove(v)) {
       balance -= 1
       tryRotateRight()
     } else
@@ -99,35 +112,21 @@ class AvlNode[T <: Comparable[T]] private (private var value: T, var parent: Avl
   override def toString: String = "node(" + value + ", parent=" + (if (parent == null) "null" else parent.toString) + ")"
 
   /**
-   * @return true if rotation was performed
+   * @return true if height has decreased
    */
   private def tryRotateLeft(): Boolean = {
     if (balance < 2)
       return false
     var newSubRoot: AvlNode[T] = null
-    if (right.balance > 0) {
+    val result = if (right.balance > 0) {
       newSubRoot = right
       balance = 0
       newSubRoot.balance = 0
-
-      right = newSubRoot.left
-      if (right != null)
-        right.parent = this
-      newSubRoot.left = this
-      replaceBy(newSubRoot)
-      parent = newSubRoot
       true
     } else if (right.balance == 0) {
       newSubRoot = right
       balance = 1
       newSubRoot.balance = -1
-
-      right = newSubRoot.left
-      if (right != null)
-        right.parent = this
-      newSubRoot.left = this
-      replaceBy(newSubRoot)
-      parent = newSubRoot
       false
     } else {
       newSubRoot = right.left
@@ -138,47 +137,34 @@ class AvlNode[T <: Comparable[T]] private (private var value: T, var parent: Avl
       newSubRoot.right.parent = newSubRoot
       right.balance = 0
       balance = 0
-
-      right = newSubRoot.left
-      if (right != null)
-        right.parent = this
-      newSubRoot.left = this
-      replaceBy(newSubRoot)
-      parent = newSubRoot
       true
     }
+    right = newSubRoot.left
+    if (right != null)
+      right.parent = this
+    newSubRoot.left = this
+    replaceBy(newSubRoot)
+    parent = newSubRoot
+
+    result
   }
 
   /**
-   * @return true if rotation was performed
+   * @return true if height has decreased
    */
   private def tryRotateRight(): Boolean = {
     if (balance > -2)
       return false
     var newSubRoot: AvlNode[T] = null
-    if (left.balance < 0) {
+    val result = if (left.balance < 0) {
       newSubRoot = left
       balance = 0
       newSubRoot.balance = 0
-
-      left = newSubRoot.right
-      if (left != null)
-        left.parent = this
-      newSubRoot.right = this
-      replaceBy(newSubRoot)
-      parent = newSubRoot
       true
     } else if (left.balance == 0) {
       newSubRoot = left
       balance = -1
       newSubRoot.balance = 1
-
-      left = newSubRoot.right
-      if (left != null)
-        left.parent = this
-      newSubRoot.right = this
-      replaceBy(newSubRoot)
-      parent = newSubRoot
       false
     } else {
       newSubRoot = left.right
@@ -189,22 +175,25 @@ class AvlNode[T <: Comparable[T]] private (private var value: T, var parent: Avl
       newSubRoot.left.parent = newSubRoot
       left.balance = 0
       balance = 0
-
-      left = newSubRoot.right
-      if (left != null)
-        left.parent = this
-      newSubRoot.right = this
-      replaceBy(newSubRoot)
-      parent = newSubRoot
       true
     }
+    left = newSubRoot.right
+    if (left != null)
+      left.parent = this
+    newSubRoot.right = this
+    replaceBy(newSubRoot)
+    parent = newSubRoot
+
+    result
   }
 
   private def replaceBy(replacement: AvlNode[T]) = {
-    if (this eq parent.left)
-      parent.left = replacement
-    else
-      parent.right = replacement
+    if (parent != null) {
+      if (this eq parent.left)
+        parent.left = replacement
+      else
+        parent.right = replacement
+    }
     if (replacement != null)
       replacement.parent = parent
   }
@@ -221,50 +210,5 @@ class AvlNode[T <: Comparable[T]] private (private var value: T, var parent: Avl
     while (result.left != null)
       result = result.left
     result
-  }
-}
-
-object AvlNode {
-  private class RootNode[T <: Comparable[T]](value: T) extends AvlNode[T](value, null) {
-    override def contains(v: T): Boolean = {
-      if (left == null)
-        false
-      else
-        left.contains(v)
-    }
-
-    override def add(v: T): Boolean = {
-      if (v == null)
-        return false
-      if (left == null)
-        left = new AvlNode[T](v, this)
-      else
-        left.add(v)
-      false
-    }
-
-    override def remove(v: T): Boolean = {
-      if (v == null)
-        return false
-      if (left == null)
-        false
-      else
-        left.remove(v)
-      false
-    }
-
-    override def toSeq: Seq[T] = if (left == null) Seq() else left.toSeq
-
-    override def height: Int = if (left == null) 0 else left.height
-
-    override def toString: String = "root"
-  }
-
-  def newTree[T <: Comparable[T]](v: T): AvlNode[T] = {
-    if (v == null)
-      return null
-    val root = new RootNode[T](v)
-    root.add(v)
-    root
   }
 }
