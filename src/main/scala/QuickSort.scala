@@ -1,44 +1,35 @@
 object QuickSort {
-	def sort(xs: Array[Int]): Array[Int] =
-		if (xs.length < 2)
-			xs
-		else {
-			val pivot = xs.head
-			val (first, second) = xs.partition(_ < pivot)
-			if (first.isEmpty)
-				xs.head +: sort(xs.tail)
-			else if (second.isEmpty)
-				sort(xs.tail) :+ xs.head
-			else
-				sort(first) ++ sort(second)
-		}
+  def sort(xs: Array[Int]): Array[Int] =
+    if (xs.length < 2)
+      xs
+    else {
+      val (a, b) = xs.tail.partition(_ < xs.head)
+      (sort(a) :+ xs.head) ++ sort(b)
+    }
 
-	def sortInPlace(xs: Array[Int]) = innerSort(xs, 0, xs.length - 1)
+  def sortInPlace(xs: Array[Int]): Unit = {
+    @inline
+    def swap(i: Int, j: Int) = {
+      val temp = xs(i)
+      xs(i) = xs(j)
+      xs(j) = temp
+    }
 
-	private def innerSort(xs: Array[Int], firstIndex: Int, lastIndex: Int): Unit = {
-		if (lastIndex == firstIndex)
-			return
-		var (first, last) = (firstIndex, lastIndex)
-		val pivot = xs(last)
-		while (first <= last) {
-			if (xs(first) > pivot) {
-				swap(xs, first, last)
-				last -= 1
-			} else
-				first += 1
-		}
-		if (last == lastIndex && xs(firstIndex) > xs(lastIndex)) { //if pivot is max
-			swap(xs, firstIndex, lastIndex)
-			innerSort(xs, 0, lastIndex - 1)
-		} else if (lastIndex - firstIndex > 1) {
-			innerSort(xs, firstIndex, last)
-			innerSort(xs, last + 1, lastIndex)
-		}
-	}
+    def _sort(start: Int, end: Int): Unit = {
+      if (end - start > 1) {
+        var split = start + 1
+        for (i <- start + 1 until end) {
+          if (xs(i) < xs(start)) {
+            swap(i, split)
+            split += 1
+          }
+        }
+        swap(start, split - 1)
+        _sort(start, split - 1)
+        _sort(split, end)
+      }
+    }
 
-	private def swap(xs: Array[Int], i: Int, j: Int) = {
-		val temp = xs(i)
-		xs.update(i, xs(j))
-		xs.update(j, temp)
-	}
+    _sort(0, xs.length)
+  }
 }
